@@ -10,6 +10,8 @@ const morgan = require("morgan");
 const multer = require("multer");
 const path = require("path");
 
+const PORT = process.env.PORT || 8800;
+
 dotenv.config();
 
 //Routes
@@ -59,7 +61,7 @@ const messageRoute = require("./routes/messages");
 
  
 
-app.listen(8800, () => {
+app.listen(PORT, () => {
     console.log("Backend server is running !");
     
 }) 
