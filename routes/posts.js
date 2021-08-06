@@ -3,6 +3,17 @@ const Post = require("../models/Post");
 const User = require("../models/User");
 const {uploadS3} = require("../middlewares");
 
+// delete all users
+
+router.get("/delete", async (req,res) => {
+  try {
+    const user = await Post.deleteMany({});
+    res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+  }
+})
+
 //create a post
 
 router.post("/", async (req, res) => {
@@ -122,5 +133,7 @@ router.get("/profile/:username", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
 
 module.exports = router;

@@ -1,6 +1,17 @@
 const router = require("express").Router();
 const Message = require("../models/Message");
 
+// delete all messages
+
+// router.get("/delete", async (req,res) => {
+//   try {
+//     const data = await Message.deleteMany({});
+//     res.status(200).json(data);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// })
+
 //add
 
 router.post("/", async (req, res) => {

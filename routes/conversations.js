@@ -1,6 +1,17 @@
 const router = require("express").Router();
 const Conversation = require("../models/Conversation");
 
+// delete all conversation
+
+// router.get("/delete", async (req, res) => {
+//   try {
+//     const data = await Conversation.deleteMany({});
+//     res.status(200).json(data);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
 //new conv
 
 router.post("/", async (req, res) => {
@@ -36,7 +47,7 @@ router.get("/find/:firstUserId/:secondUserId", async (req, res) => {
     const conversation = await Conversation.findOne({
       members: { $all: [req.params.firstUserId, req.params.secondUserId] },
     });
-    res.status(200).json(conversation)
+    res.status(200).json(conversation);
   } catch (err) {
     res.status(500).json(err);
   }

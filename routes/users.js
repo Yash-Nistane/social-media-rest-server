@@ -27,14 +27,15 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+//edit profile photo
 router.post("/editProfile/:id",uploadS3.single("profilePic"), async (req, res) => {
   console.log(req.file.location);
 
   try {
     const user = await User.findByIdAndUpdate(req.params.id, {
       $set: {profilePicture:req.file.location},
-    });
-    res.status(200).json("Account has been updated");
+    },{new:true});
+    res.status(200).json(user);
   } catch (err) {
     return res.status(500).json(err);
   }
@@ -159,5 +160,16 @@ router.get("/getAllUsers", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+// delete all users
+
+router.get("/delete", async (req,res) => {
+  try {
+    const user = await User.deleteMany({});
+    res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 module.exports = router;
