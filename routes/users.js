@@ -29,7 +29,7 @@ router.put("/:id", async (req, res) => {
 
 //edit profile photo
 router.post("/editProfile/:id",uploadS3.single("profilePic"), async (req, res) => {
-  console.log(req.file.location);
+  //console.log(req.file.location);
 
   try {
     const user = await User.findByIdAndUpdate(req.params.id, {
@@ -43,7 +43,7 @@ router.post("/editProfile/:id",uploadS3.single("profilePic"), async (req, res) =
 
 //edit cover photo
 router.post("/editCover/:id",uploadS3.single("coverPic"), async (req, res) => {
-  console.log(req.file.location);
+  //console.log(req.file.location);
 
   try {
     const user = await User.findByIdAndUpdate(req.params.id, {
@@ -168,7 +168,7 @@ router.get("/delete", async (req,res) => {
     const user = await User.deleteMany({});
     res.status(200).json(user);
   } catch (error) {
-    console.log(error);
+    //console.log(error);
   }
 })
 

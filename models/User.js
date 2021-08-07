@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema(
     },
     profilePicture: {
       type: String,
-      default: "",
+      default: "https://social-media--app.s3.ap-south-1.amazonaws.com/noAvatar.png",
     },
     coverPicture: {
       type: String,

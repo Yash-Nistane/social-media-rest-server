@@ -1,24 +1,27 @@
 const router = require("express").Router();
 const Post = require("../models/Post");
 const User = require("../models/User");
-const {uploadS3} = require("../middlewares");
+const { uploadS3 } = require("../middlewares");
 
 // delete all users
 
-router.get("/delete", async (req,res) => {
+router.get("/delete", async (req, res) => {
   try {
     const user = await Post.deleteMany({});
     res.status(200).json(user);
   } catch (error) {
     console.log(error);
   }
-})
+});
 
 //create a post
 
 router.post("/", async (req, res) => {
-  const newPost = new Post(req.body);
-  console.log("newpost",req.body);
+  const newPost = new Post({
+    userId: req.body.userId,
+    desc: req.body.desc,
+  });
+
   try {
     const savedPost = await newPost.save();
     res.status(200).json(savedPost);
@@ -28,24 +31,24 @@ router.post("/", async (req, res) => {
 });
 
 //upload image
-router.post("/upload",uploadS3.single("file"), async (req, res) => {  
-  console.log("newposttttttttttttttttt",req.body);
-  console.log("fileee",req.file.location);
+router.post("/upload", uploadS3.single("file"), async (req, res) => {
+  //console.log("newposttttttttttttttttt",req.body);
+  //console.log("fileee",req.file.location);
 
   const newPost = new Post({
-    userId:req.body.userId,
-    desc:req.body.desc,
-    img:req.file.location
+    userId: req.body.userId,
+    desc: req.body.desc,
+    img: req.file.location,
   });
   // newPost.img = req.file.location;
-  
-    console.log("file ka location",newPost.img);
-    try {
-      const savedPost = await newPost.save();
-      res.status(200).json(savedPost);
-    } catch (err) {
-      res.status(500).json(err); 
-    }
+
+  //console.log("file ka location", newPost.img);
+  try {
+    const savedPost = await newPost.save();
+    res.status(200).json(savedPost);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 //update a post
 
@@ -94,7 +97,6 @@ router.put("/:id/like", async (req, res) => {
   }
 });
 
-
 //get a post
 router.get("/:id", async (req, res) => {
   try {
@@ -116,7 +118,7 @@ router.get("/timeline/:userId", async (req, res) => {
         return Post.find({ userId: friendId });
       })
     );
-    res.json(userPosts.concat(...friendPosts))
+    res.json(userPosts.concat(...friendPosts));
   } catch (err) {
     res.status(500).json(err);
   }
@@ -133,7 +135,5 @@ router.get("/profile/:username", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-
 
 module.exports = router;
